@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Racer
+comment1.params=name\ color\ startX\ startY
+comment1.target=Racer(java.lang.String,\ java.awt.Color,\ int,\ int)
+comment2.params=g
+comment2.target=void\ draw(java.awt.Graphics)
+comment3.params=
+comment3.target=int\ getX()
+numComments=4

@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=name\ startX\ startY
+comment1.target=Player(java.lang.String,\ int,\ int)
+comment2.params=key
+comment2.target=void\ handleInput(int)
+numComments=3
