@@ -20,17 +20,17 @@ public class Bot extends Racer {
         if (difficulty == 0) { 
             // --- EASY (MUDAH) ---
             chanceToMove = 30; // Jarang gerak (cuma 15%)
-            speed = 3 + rand.nextInt(3); // Langkah pendek (3-5 pixel)
+            speed = 2 + rand.nextInt(3); // Langkah pendek (3-5 pixel)
         } 
         else if (difficulty == 1) { 
             // --- MEDIUM (SEDANG) ---
             chanceToMove = 50; // Standar (30%)
-            speed = 5 + rand.nextInt(5); // Langkah sedang (5-9 pixel)
+            speed = 3 + rand.nextInt(5); // Langkah sedang (5-9 pixel)
         } 
         else { 
             // --- HARD (SULIT) ---
             chanceToMove = 60; // Sering gerak! (60%)
-            speed = 8 + rand.nextInt(7); // Langkah jauh & ngebut (8-14 pixel)
+            speed = 5 + rand.nextInt(7); // Langkah jauh & ngebut (8-14 pixel)
         }
 
         // Eksekusi Gerakan

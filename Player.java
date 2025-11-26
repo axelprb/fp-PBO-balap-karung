@@ -23,7 +23,7 @@ public class Player extends Racer {
         }
 
         if (move) {
-            this.x += 16; // Maju
+            this.x += 12; // Maju
             this.jumpFrame = 5; // Set animasi lompat selama 5 frame
         }
     }
