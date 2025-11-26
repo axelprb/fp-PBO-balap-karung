@@ -39,7 +39,7 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
 
         // --- 2. LOAD BACKGROUND ---
         try {
-            background = ImageIO.read(new File("background.png"));
+            background = ImageIO.read(new File("assets/background.png"));
         } catch (IOException e) {
             System.out.println("Background error");
         }

@@ -20,8 +20,8 @@ public class Racer {
         // --- BAGIAN LOAD GAMBAR ---
         try {
             // Membaca file dari folder project
-            imgBerdiri = ImageIO.read(new File("berdiri.png"));
-            imgLompat = ImageIO.read(new File("lompat.png"));
+            imgBerdiri = ImageIO.read(new File("assets/berdiri.png"));
+            imgLompat = ImageIO.read(new File("assets/lompat.png"));
         } catch (IOException e) {
             System.out.println("GAMBAR TIDAK KETEMU! Cek nama file.");
             e.printStackTrace();
