@@ -168,6 +168,15 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
             g.setFont(new Font("Arial", Font.PLAIN, 20));
             g.drawString("Tekan SPASI untuk ke MENU", xPos + 20, (getHeight()/2) + 50);
         }
+
+        if (isMenuOpen) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.PLAIN, 16));
+            String instruksi = "Tekan arrow kanan (-->) dan arrow kiri (<--) secara bergantian untuk bergerak!";
+            FontMetrics fm = g.getFontMetrics();
+            int xPos = (getWidth() - fm.stringWidth(instruksi)) / 2;
+            g.drawString(instruksi, xPos, getHeight() - 30);
+        }
     }
 
     @Override
