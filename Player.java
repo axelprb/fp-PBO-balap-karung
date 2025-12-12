@@ -2,15 +2,15 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends Racer {
-    private int lastKey = -1; // Mengingat tombol terakhir
+    private int lastKey = -1; 
     
     public Player(String name, int startX, int startY) {
-        // Kirim nama ke class Induk (Racer)
+        
         super(name, Color.BLUE, startX, startY);
     }
 
     public void handleInput(int key) {
-        // Logika: Harus pencet KANAN dan KIRI bergantian
+        
         boolean move = false;
 
         if (key == KeyEvent.VK_RIGHT && lastKey != KeyEvent.VK_RIGHT) {
@@ -23,8 +23,8 @@ public class Player extends Racer {
         }
 
         if (move) {
-            this.x += 12; // Maju
-            this.jumpFrame = 5; // Set animasi lompat selama 5 frame
+            this.x += 12; 
+            this.jumpFrame = 5; 
         }
     }
 }

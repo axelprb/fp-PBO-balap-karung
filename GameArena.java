@@ -84,10 +84,10 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
     }
 
     private void setupUI() {
-        int centerX = 1280 / 2; // 640
-        int centerY = 720 / 2;  // 360
+        int centerX = 1280 / 2; 
+        int centerY = 720 / 2; 
 
-        // Label Judul
+        // Label Judul  
         labelJudul = new JLabel("SIAPA NAMAMU?", SwingConstants.CENTER);
         labelJudul.setFont(new Font("Arial", Font.BOLD, 24));
         labelJudul.setForeground(Color.WHITE);
