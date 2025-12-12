@@ -9,14 +9,14 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
     private Player player;
     private Bot[] bots; 
     
-    private Timer timer;           // Timer Game Loop
-    private Timer countdownTimer;  // Timer khusus Hitungan Mundur
+    private Timer timer;
+    private Timer countdownTimer; // Timer untuk hitungan mundur
     
     // STATUS GAME
     private boolean isMenuOpen = true; 
     private boolean isGameOver = false;
-    private boolean isCountingDown = false; // Status baru: Sedang hitung mundur
-    private int countdownValue = 3;         // Angka hitungan (3, 2, 1...)
+    private boolean isCountingDown = false; // Status sedang countdown
+    private int countdownValue = 3;         // Angka hitungan
     private String winner = "";
     
     // SETTING KESULITAN
@@ -42,10 +42,9 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
 
         // --- 2. LOAD BACKGROUND ---
         try {
-            // Menggunakan path sesuai kode kamu
             background = ImageIO.read(new File("assets/background.png"));
         } catch (IOException e) {
-            System.out.println("Background error (Cek folder assets!)");
+            System.out.println("Background error");
         }
 
         // --- 3. INIT KARAKTER AWAL ---
@@ -55,9 +54,9 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
         JFrame frame = new JFrame("Lomba Balap Karung");
         frame.setSize(1280, 720); 
         
-        // --- FITUR MENGUNCI UKURAN JENDELA ---
+        // --- FITUR BARU: MENGUNCI UKURAN JENDELA ---
         frame.setResizable(false); 
-        // -------------------------------------
+        // -------------------------------------------
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
@@ -79,6 +78,7 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
         // Bot Y: 346
         int startY = 346; 
         for (int i = 0; i < bots.length; i++) {
+            // Jarak Bot: 23
             bots[i] = new Bot(50, startY + (i * 23), difficulty);
         }
     }
@@ -117,14 +117,12 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
         btnMulai.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // UBAH DI SINI: Panggil persiapan countdown dulu
                 siapkanCountdown();
             }
         });
         this.add(btnMulai);
     }
 
-    // METHOD BARU: Menangani Logika Countdown
     private void siapkanCountdown() {
         String nama = inputNama.getText();
         if (nama.trim().isEmpty()) nama = "Jagoan";
@@ -132,33 +130,28 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
         selectedDifficulty = comboDifficulty.getSelectedIndex(); 
         resetPositions(nama, selectedDifficulty);
 
-        // Hilangkan Menu
         isMenuOpen = false;
         labelJudul.setVisible(false);
         inputNama.setVisible(false);
         comboDifficulty.setVisible(false);
         btnMulai.setVisible(false);
 
-        // --- MULAI COUNTDOWN ---
+        // Mulai Countdown
         isCountingDown = true;
-        countdownValue = 3; // Mulai dari 3
+        countdownValue = 3;
 
-        // Timer khusus: Jalan setiap 1 detik (1000 ms)
         countdownTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                countdownValue--; // Kurangi angka
-                
+                countdownValue--;
                 if (countdownValue < 0) {
-                    // Selesai hitung mundur
                     isCountingDown = false;
-                    countdownTimer.stop(); // Matikan timer countdown
+                    countdownTimer.stop();
                 }
-                repaint(); // Update layar biar angka berubah
+                repaint();
             }
         });
         countdownTimer.start();
-        // -----------------------
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -179,29 +172,26 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
         player.draw(g);
         for (Bot b : bots) b.draw(g);
 
-        // 1. Gambar Layar Menu (Dimmed)
         if (isMenuOpen) {
             g.setColor(new Color(0, 0, 0, 180)); 
             g.fillRect(0, 0, getWidth(), getHeight());
         }
 
-        // 2. LOGIKA BARU: Gambar Angka Countdown Besar
+        // Tampilan Countdown
         if (isCountingDown) {
-            // Gelapkan background sedikit biar angka jelas
             g.setColor(new Color(0, 0, 0, 100));
             g.fillRect(0, 0, getWidth(), getHeight());
 
             g.setColor(Color.YELLOW);
-            g.setFont(new Font("Arial", Font.BOLD, 150)); // Font Raksasa
+            g.setFont(new Font("Arial", Font.BOLD, 150));
             
             String textTampil;
             if (countdownValue > 0) {
-                textTampil = String.valueOf(countdownValue); // "3", "2", "1"
+                textTampil = String.valueOf(countdownValue);
             } else {
-                textTampil = "GO!"; // "0" diganti "GO!"
+                textTampil = "GO!";
             }
 
-            // Tengahkan Teks
             FontMetrics fm = g.getFontMetrics();
             int xPos = (getWidth() - fm.stringWidth(textTampil)) / 2;
             int yPos = (getHeight() / 2) + 50;
@@ -209,7 +199,6 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
             g.drawString(textTampil, xPos, yPos);
         }
 
-        // 3. Gambar Game Over
         if (isGameOver) {
             g.setColor(new Color(0, 0, 0, 150)); 
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -222,7 +211,6 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
             g.drawString("Tekan SPASI untuk ke MENU", xPos + 20, (getHeight()/2) + 50);
         }
 
-        // 4. Instruksi (Hanya muncul saat menu buka)
         if (isMenuOpen) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -235,7 +223,6 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // LOGIKA PENTING: Game hanya jalan kalau TIDAK menu, TIDAK game over, dan TIDAK sedang hitung mundur
         if (!isMenuOpen && !isGameOver && !isCountingDown) {
             for (Bot b : bots) b.autoMove();
             checkWin();
@@ -276,7 +263,6 @@ public class GameArena extends JPanel implements ActionListener, KeyListener {
             
             repaint();
         } 
-        // Input Player Logic (Hanya jalan kalau Menu Tutup, Game Over False, Countdown False)
         else if (!isMenuOpen && !isGameOver && !isCountingDown) {
             player.handleInput(e.getKeyCode());
         }
